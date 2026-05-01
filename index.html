@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html-zone – My HTML Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #f6f8fa;
+            color: #1f2328;
+            line-height: 1.5;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Left sidebar (matching your image) */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            border-right: 1px solid #d0d7de;
+            padding: 1.5rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #656d76;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .sidebar nav ul {
+            list-style: none;
+        }
+        .sidebar nav li {
+            margin: 0.5rem 0;
+        }
+        .sidebar nav a {
+            text-decoration: none;
+            color: #0969da;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.25rem 0;
+        }
+        .sidebar nav a:hover {
+            text-decoration: underline;
+        }
+        .sidebar hr {
+            margin: 1rem 0;
+            border: 0;
+            border-top: 1px solid #d0d7de;
+        }
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .subhead {
+            color: #656d76;
+            margin-bottom: 2rem;
+            border-left: 3px solid #0969da;
+            padding-left: 1rem;
+        }
+        .categories {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .category {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #d0d7de;
+            overflow: hidden;
+        }
+        .category-header {
+            background: #f6f8fa;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid #d0d7de;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .category-header .folder-icon {
+            font-size: 1.3rem;
+        }
+        .file-list {
+            padding: 0.5rem 0;
+        }
+        .file-list ul {
+            list-style: none;
+        }
+        .file-list li {
+            padding: 0.5rem 1.5rem;
+            border-bottom: 1px solid #eaeef2;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        .file-list a {
+            text-decoration: none;
+            color: #0969da;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .file-list a:hover {
+            text-decoration: underline;
+        }
+        .empty-folder {
+            color: #656d76;
+            padding: 0.75rem 1.5rem;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d0d7de;
+            font-size: 0.8rem;
+            color: #656d76;
+            text-align: center;
+        }
+        @media (max-width: 700px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid #d0d7de;
+            }
+            .main {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Left sidebar – mirrors the menu from your image -->
+    <aside class="sidebar">
+        <h2>📁 html-zone</h2>
+        <nav>
+            <ul>
+                <li><a href="#">🏠 Home</a></li>
+                <li><a href="#">🖼️ Gallery</a></li>
+                <li><a href="#">👤 Ryan - Personal</a></li>
+                <li><a href="#">⬇️ Downloads</a></li>
+                <li><a href="#">📄 Documents</a></li>
+                <li><a href="#">📸 Pictures</a></li>
+                <li><a href="#">🎵 Music</a></li>
+                <li><a href="#">🗄️ HTMLs_Back_Up_Here</a></li>
+                <li><a href="#">💿 Media (E:)</a></li>
+                <li><a href="#">🖥️ Desktop</a></li>
+                <li><a href="#">⌨️ Prompt</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div style="font-size: 0.75rem; color: #656d76;">
+            Last sync: <span id="date"></span>
+        </div>
+    </aside>
+
+    <!-- Main content: categories exactly as in your image -->
+    <main class="main">
+        <h1>
+            <span>📂</span> My HTML Collection
+        </h1>
+        <div class="subhead">
+            Organized by folder · Click any file to view
+        </div>
+
+        <div class="categories" id="categories-container">
+            <!-- Categories will be injected here by JavaScript -->
+            <div style="text-align: center; padding: 2rem;">Loading your library...</div>
+        </div>
+        <footer>
+            GitHub Pages · <strong>html-zone</strong> · Updated automatically on push
+        </footer>
+    </main>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // FOLDERS FROM YOUR IMAGE (exactly as they appear)
+    // --------------------------------------------------------------
+    const folders = [
+        "archive",
+        "bbl",
+        "daily forms",
+        "dashboards",
+        "demos",
+        "field-reference",
+        "finance",
+        "interview-prep",
+        "job-search",
+        "work in progress"
+    ];
+
+    // Optional: friendly names or icons for each folder
+    const folderIcons = {
+        "archive": "🗄️",
+        "bbl": "📘",
+        "daily forms": "📅",
+        "dashboards": "📊",
+        "demos": "🎮",
+        "field-reference": "📚",
+        "finance": "💰",
+        "interview-prep": "🎤",
+        "job-search": "🔍",
+        "work in progress": "🚧"
+    };
+
+    // Helper: fetch list of HTML files inside a given folder
+    // This uses GitHub's raw directory listing (works on GitHub Pages)
+    async function getHtmlFiles(folder) {
+        const encodedFolder = encodeURIComponent(folder);
+        // Construct path to the folder on GitHub Pages (same origin)
+        const folderUrl = `./${folder}/`;
+        try {
+            // Fetch the folder's directory listing (GitHub Pages serves an auto-index if no index.html)
+            // But to reliably get file list, we need to use a HEAD request or parse the HTML?
+            // Simpler: Use a known JSON endpoint? No. Alternative: fetch a list from a custom manifest.
+            // For pure client-side, we can attempt to fetch each potential file? Not efficient.
+            // Better: Assume the user will rely on the dynamic approach where we list files from a pre-generated manifest.
+            // However, to keep it working without backend, I'll implement a pattern that tries common HTML filenames?
+            // That's unreliable. Instead, I'll use an embedded manifest approach: you'll manually add files or use a tiny script at build.
+            
+            // For now, use a smarter fallback: check if a file named 'index.html' exists in subfolder? No.
+            // Given the user wants a revision of index.html, I'll provide a version that shows the folders,
+            // and inside each, we can attempt to list files by fetching the folder's HTML response and parsing anchor tags.
+            // That works on GitHub Pages because directory listing is enabled (no index.html in subfolder).
+            // So let's do that:
+            const response = await fetch(folderUrl);
+            if (!response.ok) return [];
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const links = doc.querySelectorAll('a');
+            const files = [];
+            for (let link of links) {
+                let href = link.getAttribute('href');
+                if (href && href.endsWith('.html')) {
+                    // Remove any leading './' or '/'
+                    const fileName = href.replace(/^\.\//, '').replace(/^\//, '');
+                    files.push(fileName);
+                }
+            }
+            return files;
+        } catch (err) {
+            console.warn(`Could not list files in ${folder}:`, err);
+            return [];
+        }
+    }
+
+    // Render all categories and their files
+    async function renderLibrary() {
+        const container = document.getElementById('categories-container');
+        container.innerHTML = ''; // clear loading
+
+        for (let folder of folders) {
+            const icon = folderIcons[folder] || '📁';
+            const section = document.createElement('div');
+            section.className = 'category';
+            
+            const header = document.createElement('div');
+            header.className = 'category-header';
+            header.innerHTML = `<span class="folder-icon">${icon}</span> ${folder}`;
+            section.appendChild(header);
+            
+            const fileListDiv = document.createElement('div');
+            fileListDiv.className = 'file-list';
+            
+            // Try to get HTML files inside this folder
+            const files = await getHtmlFiles(folder);
+            if (files.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.className = 'empty-folder';
+                emptyMsg.innerText = '📭 No HTML files found yet. Add some .html files here.';
+                fileListDiv.appendChild(emptyMsg);
+            } else {
+                const ul = document.createElement('ul');
+                for (let file of files) {
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `./${folder}/${file}`;
+                    link.innerText = file;
+                    link.target = '_blank'; // open in new tab for easy browsing
+                    li.appendChild(link);
+                    // Optional: show file modified date? Not easily available without extra fetch.
+                    ul.appendChild(li);
+                }
+                fileListDiv.appendChild(ul);
+            }
+            section.appendChild(fileListDiv);
+            container.appendChild(section);
+        }
+    }
+
+    // Display today's date in sidebar
+    document.getElementById('date').innerText = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    
+    // Start rendering
+    renderLibrary();
+</script>
+</body>
+</html>
