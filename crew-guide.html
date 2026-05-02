@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW GUIDE — MELISSA 50K</title>
+<style>
+:root {
+    --ink: #000000;
+    --paper: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e0e0e0;
+    --gray-300: #c0c0c0;
+    --border: #000000;
+    --space-xs: 0.4rem;
+    --space-sm: 0.7rem;
+    --space-md: 1.1rem;
+    --space-lg: 1.8rem;
+    --space-xl: 2.5rem;
+    --font-mono: "SF Mono", Monaco, "Cascadia Code", "Fira Code", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body {
+    font-family: var(--font-sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+.nav-strip {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--paper);
+    border-bottom: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+.nav-strip::-webkit-scrollbar { display: none; }
+.nav-strip__brand {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-right: auto;
+    flex-shrink: 0;
+}
+.nav-strip__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 9px;
+    height: 28px;
+    border: 3px solid var(--border);
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.6rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.nav-strip__link:hover, .nav-strip__link:focus {
+    background: var(--ink);
+    color: var(--paper);
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
+}
+
+/* HERO */
+.hero {
+    border: 3px solid var(--border);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+}
+.hero__title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+}
+.hero__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-top: 3px solid var(--border);
+    padding-top: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+/* SECTION */
+section { margin-bottom: var(--space-xl); scroll-margin-top: 65px; }
+.section-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    border-bottom: 3px solid var(--border);
+    padding-bottom: var(--space-xs);
+}
+.section-num {
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    border: 3px solid var(--border);
+    padding: 2px 10px;
+    flex-shrink: 0;
+}
+.section-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* CARDS */
+.card {
+    border: 3px solid var(--border);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    background: var(--paper);
+}
+.card--gray {
+    background: var(--gray-200);
+}
+.card--muted {
+    background: var(--gray-100);
+}
+.card__label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xs);
+    opacity: 0.6;
+}
+
+/* MNEMONIC */
+.mnemonic {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-100);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* WARN BOX */
+.warn-box {
+    border: 3px dashed var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-100);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.warn-box__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xs);
+}
+
+/* TRUTH BOX */
+.truth-box {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-200);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.truth-box__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xs);
+}
+
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-bottom: var(--space-sm);
+}
+th, td {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    background: var(--gray-200);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+tr:nth-child(even) td {
+    background: var(--gray-100);
+}
+
+/* FLOW BLOCKS */
+.flow-block {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-sm);
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+.flow-arrow {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: var(--space-xs) 0;
+}
+
+/* DECISION TREE */
+.tree {
+    border: 3px solid var(--border);
+    padding: var(--space-md);
+    background: var(--gray-100);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 2;
+    text-align: center;
+}
+.tree__q {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    display: inline-block;
+    margin: var(--space-xs) 0;
+    background: var(--paper);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+.tree__branch {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin: var(--space-xs) 0;
+}
+.tree__end {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    display: inline-block;
+    background: var(--gray-200);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+/* CHECKLIST */
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+.checklist li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.checklist li:last-child {
+    border-bottom: none;
+}
+.check-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* BULLET LIST */
+.bullet-list {
+    list-style: none;
+    padding: 0;
+}
+.bullet-list li {
+    padding: var(--space-xs) 0 var(--space-xs) 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+}
+.bullet-list li:last-child {
+    border-bottom: none;
+}
+.bullet-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+}
+
+/* SCRIPT BOX */
+.script-box {
+    border-left: 6px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--gray-100);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-sans);
+}
+
+/* TWO COL */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+}
+@media (min-width: 640px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    border: 3px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* PRINT */
+@media print {
+    html { font-size: 12px; }
+    .nav-strip { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .mnemonic, .warn-box, .truth-box, .tree, .script-box, table, footer {
+        border-color: #000 !important;
+        break-inside: avoid;
+    }
+    section { break-inside: avoid; margin-bottom: 1.2rem; }
+    .card--gray, .card--muted, .mnemonic, .truth-box, .tree { background: #f0f0f0 !important; }
+    .check-box { border-color: #000 !important; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<nav class="nav-strip" aria-label="Section navigation">
+    <div class="nav-strip__brand">CREW GUIDE</div>
+    <a class="nav-strip__link" href="#rules">RULES</a>
+    <a class="nav-strip__link" href="#loop">LOOP</a>
+    <a class="nav-strip__link" href="#stops">STOPS</a>
+    <a class="nav-strip__link" href="#map">MAP</a>
+    <a class="nav-strip__link" href="#gear">GEAR</a>
+    <a class="nav-strip__link" href="#trees">TREES</a>
+    <a class="nav-strip__link" href="#scripts">SCRIPTS</a>
+    <a class="nav-strip__link" href="#fail">FAIL</a>
+    <a class="nav-strip__link" href="#reality">REALITY</a>
+</nav>
+
+<div class="container">
+
+<header class="hero">
+    <h1 class="hero__title">CREW GUIDE</h1>
+    <p class="hero__subtitle">Melissa — Black River Trail Classic 50K — Don't Accidentally Ruin Her Race</p>
+</header>
+
+<!-- ============================================================
+   0. CORE RULES
+   ============================================================ -->
+<section id="rules">
+    <div class="section-header">
+        <span class="section-num">00</span>
+        <span class="section-title">Core Rules — Read This First</span>
+    </div>
+
+    <div class="warn-box">
+        <div class="warn-box__title">Non-Negotiable</div>
+        <ul class="bullet-list" style="margin-top:var(--space-xs);">
+            <li>You can ONLY crew at: Start/Finish, Millston (~mile 5), Shale Road (twice), Wildcat (~mile 24)</li>
+            <li>Stay within 100 ft of aid station</li>
+            <li>No freelancing roadside meetups</li>
+            <li>No cell service = plan like it's 2005</li>
+        </ul>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">Your Job In One Line</div>
+        <p style="font-family:var(--font-mono); font-size:1.1rem; font-weight:800; text-align:center; line-height:1.6;">
+            ARRIVE EARLY → SWAP FUEL → FIX ONE ISSUE → SEND HER FORWARD
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================
+   1. THE LOOP
+   ============================================================ -->
+<section id="loop">
+    <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Your Entire Day = This Loop</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">START</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">MILLSTON</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">SHALE (wait)</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">SHALE (again)</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">WILDCAT</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">FINISH</div>
+    </div>
+
+    <div class="mnemonic">
+        THAT'S IT. DO NOT GET CREATIVE. CREATIVITY = MISSED RUNNER.
+    </div>
+
+    <div class="card">
+        <div class="card__label">Timeline Simplified — No Math Required</div>
+        <table style="margin-bottom:0;">
+            <tr><th>Location</th><th>What Matters</th></tr>
+            <tr><td>START</td><td>Don't forget anything</td></tr>
+            <tr><td>MILLSTON</td><td>Early damage check</td></tr>
+            <tr><td>SHALE #1</td><td>Real resupply</td></tr>
+            <tr><td>SHALE #2</td><td>Fix problems fast</td></tr>
+            <tr><td>WILDCAT</td><td>Save the race</td></tr>
+            <tr><td>FINISH</td><td>Don't let her freeze</td></tr>
+        </table>
+    </div>
+</section>
+
+<!-- ============================================================
+   2. WHAT YOU DO AT EACH STOP
+   ============================================================ -->
+<section id="stops">
+    <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">What You Do At Each Stop — Script Mode</span>
+    </div>
+
+    <!-- START -->
+    <div class="card">
+        <div class="card__label">START (0 mi) — Prevent Stupid Mistakes</div>
+        <div class="script-box">"Eat early. Walk the sand. Don't be a hero."</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Final gear check</li>
+            <li><span class="check-box"></span> Confirm she has bottles (NO CUPS race)</li>
+            <li><span class="check-box"></span> Leave immediately after start</li>
+        </ul>
+    </div>
+
+    <!-- MILLSTON -->
+    <div class="card">
+        <div class="card__label">MILLSTON (~5 mi) — Danger: She Feels Amazing → Lies To You</div>
+        <p style="font-weight:700; margin-bottom:var(--space-sm);">Ask ONLY:</p>
+        <div class="script-box">"How do your legs feel?"</div>
+        <div class="script-box">"Any hot spots?"</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Top off fluids</li>
+            <li><span class="check-box"></span> Take unnecessary gear (headlamp, layers)</li>
+        </ul>
+        <div class="warn-box">
+            <div class="warn-box__title">Do Not</div>
+            Make changes. Let her stand around.
+        </div>
+    </div>
+
+    <!-- SHALE 1 -->
+    <div class="card">
+        <div class="card__label">SHALE ROAD — FIRST PASS (~16 mi) — First Real Job</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Calories?</li>
+            <li><span class="check-box"></span> Hydration?</li>
+            <li><span class="check-box"></span> Feet?</li>
+        </ul>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Refill EVERYTHING</li>
+            <li><span class="check-box"></span> Push calories into her</li>
+        </ul>
+        <div class="script-box">"Next job = survive Wildcat loop."</div>
+    </div>
+
+    <!-- SHALE 2 -->
+    <div class="card">
+        <div class="card__label">SHALE ROAD — SECOND PASS (~20 mi) — Truth Checkpoint</div>
+        <p style="font-weight:700; margin-bottom:var(--space-sm);">Look for:</p>
+        <ul class="bullet-list">
+            <li>Slower movement</li>
+            <li>Quiet answers</li>
+            <li>Bad posture</li>
+        </ul>
+        <p style="font-weight:700; margin-top:var(--space-sm); margin-bottom:var(--space-sm);">If struggling → Fix ONE thing only:</p>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Food</li>
+            <li><span class="check-box"></span> Feet</li>
+            <li><span class="check-box"></span> Fluids</li>
+        </ul>
+        <div class="script-box">"Just get to Wildcat. Nothing else matters."</div>
+    </div>
+
+    <!-- WILDCAT -->
+    <div class="card" style="border:3px dashed var(--border);">
+        <div class="card__label">WILDCAT (~24 mi) — CRITICAL POINT — Where Races Live Or Die</div>
+        <div class="warn-box" style="margin-top:0;">
+            <div class="warn-box__title">Cutoff = 2:45 PM</div>
+        </div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Is she cold?</li>
+            <li><span class="check-box"></span> Is she eating?</li>
+            <li><span class="check-box"></span> Is she mentally present?</li>
+        </ul>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Add warm layer if needed</li>
+            <li><span class="check-box"></span> Give real food</li>
+            <li><span class="check-box"></span> Caffeine if she uses it</li>
+        </ul>
+        <div class="script-box">"You're finishing this. Just keep moving."</div>
+        <div class="warn-box">
+            <div class="warn-box__title">Do Not</div>
+            Talk about time goals. Overwhelm her.
+        </div>
+    </div>
+
+    <!-- FINISH -->
+    <div class="card">
+        <div class="card__label">FINISH (~31.5 mi)</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Warmth</li>
+            <li><span class="check-box"></span> Food</li>
+            <li><span class="check-box"></span> Sit her down before she tips over</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ============================================================
+   3. MAP + COORDINATES
+   ============================================================ -->
+<section id="map">
+    <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Crew Map + Coordinates</span>
+    </div>
+
+    <div class="card">
+        <table>
+            <tr><th>Location</th><th>Mile</th><th>Coordinates</th><th>Notes</th></tr>
+            <tr><td>Start/Finish</td><td>0 / 31.5</td><td>43.5026, -90.8676</td><td>Large main staging area. Parking + finish line + warming shelter.</td></tr>
+            <tr><td>Millston</td><td>~5</td><td>43.4749, -90.8812</td><td>Small roadside lot on North Settlement Rd. Easy to miss → slow down early.</td></tr>
+            <tr><td>Shale Road</td><td>~16 & ~20</td><td>43.5057, -90.9003</td><td>Trail crossing on Shale Rd. Most important setup. Stay parked → she passes twice.</td></tr>
+            <tr><td>Wildcat</td><td>~24</td><td>43.5242, -90.8738</td><td>Larger parking lot. Final major crew opportunity. Cutoff enforcement location.</td></tr>
+        </table>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">Before You Leave Home — Non-Negotiable</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Download Google Maps offline area</li>
+            <li><span class="check-box"></span> Save each location as a starred pin</li>
+            <li><span class="check-box"></span> Screenshot directions between each point</li>
+            <li><span class="check-box"></span> Bring printed directions as backup</li>
+        </ul>
+        <div class="warn-box" style="margin-top:var(--space-sm);">
+            <div class="warn-box__title">Rule</div>
+            Cell service = unreliable. Plan like it doesn't exist.
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Driving Route</div>
+        <div class="flow-block">START → MILLSTON</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">MILLSTON → SHALE (stay parked)</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">SHALE → WILDCAT</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">WILDCAT → FINISH</div>
+        <div class="mnemonic">
+            RULE: IF YOU FEEL RUSHED, YOU LEFT TOO LATE.
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   4. GEAR SETUP
+   ============================================================ -->
+<section id="gear">
+    <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Gear Setup — Mobile Repair Station</span>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">Core System: 4 Bin Method</div>
+        <p>Label bins: Bin 1 = Millston, Bin 2 = Shale, Bin 3 = Wildcat, Bin 4 = Finish</p>
+        <p style="margin-top:var(--space-xs);">Each bin = pre-loaded for that stop.</p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">What Goes In Every Bin</div>
+        <table>
+            <tr><th>Category</th><th>Items</th></tr>
+            <tr><td><strong>1. FUEL</strong></td><td>Gels / chews she already uses, PB&J halves, pretzels / chips, banana, electrolyte mix (pre-portioned)</td></tr>
+            <tr><td><strong>2. HYDRATION</strong></td><td>1–2 full bottles ready to swap, extra soft flasks (pre-filled if possible)</td></tr>
+            <tr><td><strong>3. FEET + CHAFE</strong></td><td>Spare socks (2–3 pairs), body glide / anti-chafe stick, small towel, blister kit (tape, bandages, needle)</td></tr>
+            <tr><td><strong>4. CLOTHING</strong></td><td>Dry shirt, light jacket or wind shell, gloves + hat, buff</td></tr>
+            <tr><td><strong>5. QUICK MED</strong></td><td>Ibuprofen (if she uses it), salt tabs, ginger chews (for nausea)</td></tr>
+        </table>
+        <div class="mnemonic">
+            F-H-F-C-M — Fuel • Hydration • Feet • Clothing • Meds
+        </div>
+    </div>
+
+    <div class="card card--muted">
+        <div class="card__label">Extra — Keep In Car, Not Every Bin</div>
+        <ul class="bullet-list">
+            <li>Folding chair</li>
+            <li>Blanket or sleeping bag</li>
+            <li>Thermos (hot drink = HUGE at Wildcat)</li>
+            <li>Power bank + cables</li>
+            <li>Printed race guide + maps</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Per-Station Loadout</div>
+        <table>
+            <tr><th>Station</th><th>Bring</th><th>Goal</th></tr>
+            <tr><td><strong>MILLSTON</strong></td><td>Water refill, small fuel, optional sock change</td><td>Quick check. Get her moving.</td></tr>
+            <tr><td><strong>SHALE</strong></td><td>Full fuel restock, full hydration swap, foot care kit</td><td>Reset system before and after Wildcat loop</td></tr>
+            <tr><td><strong>WILDCAT</strong></td><td>Warm layer, real food, caffeine option, backup everything</td><td>Keep her functional to finish</td></tr>
+            <tr><td><strong>FINISH</strong></td><td>Warm clothes, easy calories, blanket</td><td>Prevent collapse / freezing</td></tr>
+        </table>
+        <div class="mnemonic">
+            LIGHT → RESET → SAVE → RECOVER
+        </div>
+    </div>
+
+    <div class="warn-box">
+        <div class="warn-box__title">Do Not</div>
+        Spread gear everywhere. Dig around while she stands there. "I know it's in here somewhere" = race over.
+    </div>
+</section>
+
+<!-- ============================================================
+   5. DECISION TREES
+   ============================================================ -->
+<section id="trees">
+    <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Decision Trees — Print These</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">Core Decision Loop — Use Anytime</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">STOP</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">BREATHE</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">ASSESS</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">DECIDE</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">ACT</div>
+    </div>
+
+    <!-- TREE 1 -->
+    <div class="card">
+        <div class="card__label">Tree 1 — "Melissa Wants To Stop"</div>
+        <div class="tree">
+            <div class="tree__q">Clear medical issue? (bleeding, confusion, injury)</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → STOP RACE → Medical</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Able to walk?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → STOP RACE</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Eaten in last 30–45 min?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → EAT + WALK 5–10 min → Reassess</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Overheating or chilled?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → Adjust clothing/fluids → Reassess</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Pain localized + worsening (injury)?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → STOP RACE</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">WALK FORWARD 5–10 MIN → RECHECK</div>
+        </div>
+        <div class="mnemonic">
+            DEFAULT: IF NOT DANGEROUS → KEEP MOVING SLOWLY
+        </div>
+    </div>
+
+    <!-- TREE 2 -->
+    <div class="card">
+        <div class="card__label">Tree 2 — "Nausea / Stomach Issues"</div>
+        <div class="tree">
+            <div class="tree__q">Can she keep fluids down?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO (vomiting repeatedly) → >1 hr = STOP / <1 hr = small sips + walk</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Still eating solids?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → Switch to liquid calories</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Effort too high?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → WALK 10–15 min</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">SMALL SIPS EVERY 2–3 MIN / SKIP 1 GEL / RESUME GRADUALLY</div>
+        </div>
+    </div>
+
+    <!-- TREE 3 -->
+    <div class="card">
+        <div class="card__label">Tree 3 — "She's Exhausted But On Pace"</div>
+        <div class="tree">
+            <div class="tree__q">Form breaking down badly?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → WALK INTERVALS</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Still fueling?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → PRIORITIZE CALORIES</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">SHIFT TO RUN/WALK / PROTECT ENERGY / FINISH > PACE</div>
+        </div>
+    </div>
+
+    <!-- TREE 4 -->
+    <div class="card">
+        <div class="card__label">Tree 4 — "Weather Turns Bad"</div>
+        <div class="tree">
+            <div class="tree__q">Heat symptoms? (dizziness, chills, confusion)</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → COOL DOWN + SLOW → Reassess</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Thunderstorm (lightning)?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → WAIT / SEEK COVER</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">ADJUST PACE / INCREASE FLUIDS / CONTINUE ONLY IF STABLE</div>
+        </div>
+    </div>
+
+    <!-- TREE 5 -->
+    <div class="card">
+        <div class="card__label">Tree 5 — "Approaching Or Missed Cutoff"</div>
+        <div class="tree">
+            <div class="tree__q">Before cutoff?</div>
+            <div class="tree__branch">
+                <div class="tree__end">YES → Can she maintain forward movement? YES = KEEP GOING / NO = Reassess (Tree 1)</div>
+                <div class="tree__end" style="border-style:dashed;">NO (missed) → ACCEPT REMOVAL</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">WALK TO FINISH OR PICKUP / EMOTIONAL SUPPORT > ANALYSIS</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   6. COMMUNICATION SCRIPTS
+   ============================================================ -->
+<section id="scripts">
+    <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Communication Scripts — Critical</span>
+    </div>
+
+    <div class="truth-box" style="margin-bottom:var(--space-md);">
+        <div class="truth-box__title">Rule</div>
+        <p>You are not arguing. You are executing pre-agreed rules.</p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When You Must Override Her</div>
+        <div class="script-box">"I love you. We agreed on this rule."</div>
+        <div class="script-box">"This is a safety call, not a performance call."</div>
+        <div class="script-box">"We're stopping to protect you."</div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When She Wants To Quit (But Safe)</div>
+        <div class="script-box">"You don't need to feel good. You just need to move."</div>
+        <div class="script-box">"Let's walk 5 minutes and reassess."</div>
+        <div class="script-box">"Next step only. Not the finish."</div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When She's Spiraling</div>
+        <div class="script-box">"You're okay. This is normal."</div>
+        <div class="script-box">"Just forward. Nothing else matters."</div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When She Misses Cutoff</div>
+        <div class="script-box">"You showed up. You did the work."</div>
+        <div class="script-box">"We'll learn from this. Not now."</div>
+    </div>
+</section>
+
+<!-- ============================================================
+   7. WHAT WILL GO WRONG + FIXES
+   ============================================================ -->
+<section id="fail">
+    <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-title">What Will Go Wrong + How You Fix It</span>
+    </div>
+
+    <div class="card">
+        <table>
+            <tr><th>Problem</th><th>Fix</th></tr>
+            <tr><td><strong>Sand destroys her early</strong></td><td>Tell her to WALK more. Not negotiable.</td></tr>
+            <tr><td><strong>Feet are wrecked</strong></td><td>Socks change. Lube. Move on.</td></tr>
+            <tr><td><strong>She's not eating</strong></td><td>Give simple food. Small bites. No debates.</td></tr>
+            <tr><td><strong>She's cold</strong></td><td>Dry layer immediately. Especially at Wildcat.</td></tr>
+            <tr><td><strong>She's mentally cooked</strong></td><td>ONE instruction only: "Get to next station."</td></tr>
+        </table>
+    </div>
+
+    <div class="card" style="border:3px dashed var(--border);">
+        <div class="card__label">Final Failure Warnings — Read This Twice</div>
+        <ul class="bullet-list">
+            <li><strong>If you miss Shale → bad day</strong></li>
+            <li><strong>If you're late to Wildcat → race over</strong></li>
+            <li><strong>If you overcomplicate stops → she cools down → bad spiral</strong></li>
+        </ul>
+    </div>
+</section>
+
+<!-- ============================================================
+   8. REALITY CHECK
+   ============================================================ -->
+<section id="reality">
+    <div class="section-header">
+        <span class="section-num">08</span>
+        <span class="section-title">Reality Check + Mental Model</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">At Mile 24 She Will</div>
+        <ul class="bullet-list">
+            <li>Look worse than expected</li>
+            <li>Move slower than expected</li>
+            <li>Doubt everything</li>
+        </ul>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">This Is Normal</div>
+        <p style="font-family:var(--font-mono); font-size:1.2rem; font-weight:800; text-align:center; line-height:1.4;">
+            THAT IS NOT FAILURE.<br>
+            THAT IS THE EVENT.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">You Are Not</div>
+        <ul class="bullet-list">
+            <li style="text-decoration:line-through;">A cheerleader</li>
+            <li style="text-decoration:line-through;">A strategist</li>
+            <li style="text-decoration:line-through;">A motivational speaker</li>
+        </ul>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">You Are</div>
+        <p style="font-family:var(--font-mono); font-size:1.1rem; font-weight:800; text-align:center; line-height:1.6;">
+            A PIT CREW MECHANIC<br>
+            FOR A VERY TIRED HUMAN ENGINE
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">What Actually Matters — Strip It Down</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Keep her eating</li>
+            <li><span class="check-box"></span> Keep her moving</li>
+            <li><span class="check-box"></span> Keep her warm</li>
+        </ul>
+        <div class="mnemonic">
+            EVERYTHING ELSE IS NOISE.
+        </div>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">Bottom Line</div>
+        <p style="font-family:var(--font-mono); font-size:1.1rem; font-weight:800; text-align:center; line-height:1.6;">
+            BE EARLY.<br>
+            BE READY.<br>
+            FIX ONE THING.<br>
+            SEND HER FORWARD.<br><br>
+            DO THAT 5 TIMES.<br>
+            SHE FINISHES.<br>
+            YOU DON'T SCREW IT UP.<br><br>
+            SYSTEM COMPLETE.
+        </p>
+    </div>
+</section>
+
+<footer>
+    BE EARLY. BE READY. FIX ONE THING. SEND HER FORWARD.
+</footer>
+
+</div>
+
+</body>
+</html>

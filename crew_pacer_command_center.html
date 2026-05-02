@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW & PACER COMMAND CENTER — MELISSA 50K</title>
+<style>
+:root {
+    --ink: #000000;
+    --paper: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e0e0e0;
+    --gray-300: #c0c0c0;
+    --border: #000000;
+    --space-xs: 0.4rem;
+    --space-sm: 0.7rem;
+    --space-md: 1.1rem;
+    --space-lg: 1.8rem;
+    --space-xl: 2.5rem;
+    --font-mono: "SF Mono", Monaco, "Cascadia Code", "Fira Code", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body {
+    font-family: var(--font-sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+.nav-strip {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--paper);
+    border-bottom: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+.nav-strip::-webkit-scrollbar { display: none; }
+.nav-strip__brand {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-right: auto;
+    flex-shrink: 0;
+}
+.nav-strip__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 9px;
+    height: 28px;
+    border: 3px solid var(--border);
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.6rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.nav-strip__link:hover, .nav-strip__link:focus {
+    background: var(--ink);
+    color: var(--paper);
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
+}
+
+/* HERO */
+.hero {
+    border: 3px solid var(--border);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+}
+.hero__title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+}
+.hero__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-top: 3px solid var(--border);
+    padding-top: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+/* SECTION */
+section { margin-bottom: var(--space-xl); scroll-margin-top: 65px; }
+.section-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    border-bottom: 3px solid var(--border);
+    padding-bottom: var(--space-xs);
+}
+.section-num {
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    border: 3px solid var(--border);
+    padding: 2px 10px;
+    flex-shrink: 0;
+}
+.section-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* CARDS */
+.card {
+    border: 3px solid var(--border);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    background: var(--paper);
+}
+.card--gray {
+    background: var(--gray-200);
+}
+.card--muted {
+    background: var(--gray-100);
+}
+.card__label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xs);
+    opacity: 0.6;
+}
+
+/* MNEMONIC */
+.mnemonic {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-100);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* WARN BOX */
+.warn-box {
+    border: 3px dashed var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-100);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.warn-box__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xs);
+}
+
+/* TRUTH BOX */
+.truth-box {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-200);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.truth-box__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xs);
+}
+
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-bottom: var(--space-sm);
+}
+th, td {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    background: var(--gray-200);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+tr:nth-child(even) td {
+    background: var(--gray-100);
+}
+
+/* FLOW BLOCKS */
+.flow-block {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-sm);
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+.flow-arrow {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: var(--space-xs) 0;
+}
+
+/* CHECKLIST */
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+.checklist li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.checklist li:last-child {
+    border-bottom: none;
+}
+.check-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* BULLET LIST */
+.bullet-list {
+    list-style: none;
+    padding: 0;
+}
+.bullet-list li {
+    padding: var(--space-xs) 0 var(--space-xs) 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+}
+.bullet-list li:last-child {
+    border-bottom: none;
+}
+.bullet-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+}
+
+/* TWO COL */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+}
+@media (min-width: 640px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    border: 3px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* PRINT */
+@media print {
+    html { font-size: 12px; }
+    .nav-strip { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .mnemonic, .warn-box, .truth-box, table, footer {
+        border-color: #000 !important;
+        break-inside: avoid;
+    }
+    section { break-inside: avoid; margin-bottom: 1.2rem; }
+    .card--gray, .card--muted, .mnemonic, .truth-box { background: #f0f0f0 !important; }
+    .check-box { border-color: #000 !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-strip" aria-label="Section navigation">
+    <div class="nav-strip__brand">CREW COMMAND</div>
+    <a class="nav-strip__link" href="#brief">BRIEF</a>
+    <a class="nav-strip__link" href="#comm">COMM</a>
+    <a class="nav-strip__link" href="#handoff">HANDOFF</a>
+    <a class="nav-strip__link" href="#timeline">TIME</a>
+    <a class="nav-strip__link" href="#reference">REF</a>
+    <a class="nav-strip__link" href="#map">MAP</a>
+    <a class="nav-strip__link" href="#gear">GEAR</a>
+    <a class="nav-strip__link" href="#fail">FAIL</a>
+    <a class="nav-strip__link" href="#check">CHECK</a>
+</nav>
+
+<div class="container">
+
+<header class="hero">
+    <h1 class="hero__title">CREW & PACER<br>COMMAND CENTER</h1>
+    <p class="hero__subtitle">Melissa — Black River Trail Classic 50K — Black River Falls, WI</p>
+</header>
+
+<!-- ============================================================
+   MISSION BOX
+   ============================================================ -->
+<div class="truth-box" style="margin-bottom:var(--space-xl);">
+    <div class="truth-box__title">Mission</div>
+    <p>Zero confusion. Zero missed handoffs. Finish the race.</p>
+    <p style="margin-top:var(--space-xs);">Crew: You (solo operator)</p>
+</div>
+
+<!-- ============================================================
+   SECTION 1 — PRE-RACE BRIEFING
+   ============================================================ -->
+<section id="brief">
+    <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Pre-Race Briefing</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">Runner Profile</div>
+        <table style="margin-bottom:0;">
+            <tr><th style="width:140px;">Name</th><td>Melissa</td></tr>
+            <tr><th>Distance</th><td>50K (31.5 mi)</td></tr>
+            <tr><th>Terrain</th><td>Sandy trails, rolling hills, ~4,000 ft gain</td></tr>
+            <tr><th>Weather</th><td>Cool morning (40–50°F), possible rain, wind exposure on ridges</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Primary Goal</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Finish strong</li>
+            <li><span class="check-box"></span> Stay steady, no blow-ups</li>
+            <li><span class="check-box"></span> No missed fueling</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Pace Range — Realistic Ultra Range</div>
+        <table>
+            <tr><th>Section</th><th>Pace Target</th></tr>
+            <tr><td>Miles 0–12 (sand)</td><td>EASY / controlled</td></tr>
+            <tr><td>Miles 12–24</td><td>Steady effort</td></tr>
+            <tr><td>Miles 24–finish</td><td>Survival + forward motion</td></tr>
+        </table>
+        <div class="warn-box">
+            <div class="warn-box__title">Rule</div>
+            If she looks fast early → she is going too fast.
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Nutrition Plan</div>
+        <table style="margin-bottom:0;">
+            <tr><th>Calories</th><td>200–300 cal/hour</td></tr>
+            <tr><th>Fluids</th><td>1 bottle per hour (adjust for weather)</td></tr>
+            <tr><th>Electrolytes</th><td>Consistent (Tailwind or equivalent)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Medical Alerts — Fill This Out</div>
+        <table style="margin-bottom:0;">
+            <tr><th style="width:140px;">Allergies</th><td>__________________</td></tr>
+            <tr><th>Medications</th><td>__________________</td></tr>
+            <tr><th>Conditions</th><td>__________________</td></tr>
+            <tr><th>Emergency Contact</th><td>__________________</td></tr>
+        </table>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 2 — COMMUNICATION SYSTEM
+   ============================================================ -->
+<section id="comm">
+    <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Communication System</span>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Keywords — No Long Conversations</div>
+        <table>
+            <tr><th>Melissa Says</th><th>Meaning</th><th>Your Action</th></tr>
+            <tr><td>"All good"</td><td>System normal</td><td>Quick handoff, send</td></tr>
+            <tr><td>"Need X"</td><td>Specific issue</td><td>Fix ONE thing</td></tr>
+            <tr><td>"Slow down"</td><td>Overcooking</td><td>Reinforce pacing</td></tr>
+            <tr><td>"Medical"</td><td>Serious issue</td><td>Stop + assess immediately</td></tr>
+        </table>
+        <div class="mnemonic">
+            ALL GOOD = SEND — NEED X = FIX ONE — SLOW DOWN = REINFORCE — MEDICAL = STOP
+        </div>
+    </div>
+
+    <div class="two-col">
+        <div class="card">
+            <div class="card__label">Approved Language — Only Say This</div>
+            <ul class="bullet-list">
+                <li>"You look strong."</li>
+                <li>"Drink this."</li>
+                <li>"Keep it easy."</li>
+                <li>"Just get to the next point."</li>
+            </ul>
+        </div>
+        <div class="card" style="border-style:dashed;">
+            <div class="card__label">Not Allowed — Never Say This</div>
+            <ul class="bullet-list">
+                <li style="text-decoration:line-through;">"You're behind pace"</li>
+                <li style="text-decoration:line-through;">"You look tired"</li>
+                <li style="text-decoration:line-through;">"You need to hurry"</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 3 — HANDOFF PROTOCOL
+   ============================================================ -->
+<section id="handoff">
+    <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Handoff Protocol</span>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Before She Arrives — 15 Min Prior</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Bottles filled</li>
+            <li><span class="check-box"></span> Caps loosened</li>
+            <li><span class="check-box"></span> Food opened</li>
+            <li><span class="check-box"></span> Socks / gear ready</li>
+            <li><span class="check-box"></span> You are standing visible but not blocking trail</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card__label">At Arrival — 10–20 Seconds Max</div>
+        <div class="flow-block">1. MAKE EYE CONTACT</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">2. HAND BOTTLE IMMEDIATELY</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">3. ASK ONE QUESTION</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">4. SWAP ITEMS</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">5. SEND HER</div>
+        <div class="mnemonic">
+            EYE → BOTTLE → ONE QUESTION → SWAP → SEND
+        </div>
+        <div class="truth-box">
+            <div class="truth-box__title">The One Question</div>
+            "Feet okay?" OR "Stomach okay?" — Pick one. Not both.
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Positioning Rule</div>
+        <ul class="bullet-list">
+            <li>Stand just off trail</li>
+            <li>Step in ONLY when she reaches you</li>
+            <li>Do not block other runners</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Post-Handoff — Immediate</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Pack fast</li>
+            <li><span class="check-box"></span> Leave within 2–3 minutes</li>
+            <li><span class="check-box"></span> Drive to next point</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 4 — TIMELINE PLANNER
+   ============================================================ -->
+<section id="timeline">
+    <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Timeline Planner</span>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Crew Point Schedule — Fill In Est Times</div>
+        <table>
+            <tr><th>Crew Point</th><th>Mile</th><th>Est Time</th><th>Arrival Prep</th><th>At Arrival</th><th>Post-Handoff</th></tr>
+            <tr><td>Start</td><td>0</td><td>7:30 AM</td><td>Final gear check</td><td>"Easy start"</td><td>Drive to Millston</td></tr>
+            <tr><td>Millston</td><td>5</td><td>________</td><td>Fill bottles</td><td>Quick check</td><td>Drive to Shale</td></tr>
+            <tr><td>Shale #1</td><td>16</td><td>________</td><td>Full fuel prep</td><td>Refill + check</td><td>Stay</td></tr>
+            <tr><td>Shale #2</td><td>20</td><td>________</td><td>Quick reset</td><td>Fix issue</td><td>Drive to Wildcat</td></tr>
+            <tr><td>Wildcat</td><td>24</td><td>________</td><td>Warm layer ready</td><td>Critical check</td><td>Drive to finish</td></tr>
+            <tr><td>Finish</td><td>31.5</td><td>________</td><td>Warm gear</td><td>Recovery</td><td>Done</td></tr>
+        </table>
+    </div>
+
+    <div class="mnemonic">
+        START → MILLSTON → SHALE → WILDCAT → FINISH
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 5 — RACE DAY REFERENCE CARD
+   ============================================================ -->
+<section id="reference">
+    <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Race Day Reference Card</span>
+    </div>
+
+    <div class="two-col">
+        <div class="card">
+            <div class="card__label">Front Side — Key Points</div>
+            <table style="margin-bottom:0;">
+                <tr><th>Point</th><th>Mile</th></tr>
+                <tr><td>Millston</td><td>5</td></tr>
+                <tr><td>Shale</td><td>16 & 20</td></tr>
+                <tr><td>Wildcat</td><td>24</td></tr>
+                <tr><td>Finish</td><td>31.5</td></tr>
+            </table>
+            <div class="mnemonic" style="margin-top:var(--space-sm);">
+                5 — 16/20 — 24 — 31.5
+            </div>
+            <p style="font-weight:700; margin-top:var(--space-sm);">Driving Route:</p>
+            <p style="font-weight:600;">Start → Millston → Shale → Wildcat → Finish</p>
+        </div>
+        <div class="card">
+            <div class="card__label">Back Side — Emergency & Stop</div>
+            <table style="margin-bottom:var(--space-sm);">
+                <tr><th>Contact</th><th>Number</th></tr>
+                <tr><td>Race Director</td><td>__________</td></tr>
+                <tr><td>Medical</td><td>__________</td></tr>
+                <tr><td>Backup contact</td><td>__________</td></tr>
+            </table>
+            <div class="warn-box">
+                <div class="warn-box__title">Stop Race If</div>
+                <ul class="checklist" style="margin-top:var(--space-xs);">
+                    <li><span class="check-box"></span> Confusion / disorientation</li>
+                    <li><span class="check-box"></span> Vomiting multiple times</li>
+                    <li><span class="check-box"></span> Severe pain / injury</li>
+                    <li><span class="check-box"></span> Cannot maintain forward movement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 6 — CREW MAP NOTES
+   ============================================================ -->
+<section id="map">
+    <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Crew Map Notes</span>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Locations & Coordinates</div>
+        <table>
+            <tr><th>Location</th><th>Coordinates</th><th>Notes</th></tr>
+            <tr><td>Start/Finish</td><td>43.5026, -90.8676</td><td>Large lot</td></tr>
+            <tr><td>Millston</td><td>43.4749, -90.8812</td><td>Small roadside</td></tr>
+            <tr><td>Shale</td><td>43.5057, -90.9003</td><td>Stay parked</td></tr>
+            <tr><td>Wildcat</td><td>43.5242, -90.8738</td><td>Final major point</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Parking + Walk Notes</div>
+        <ul class="bullet-list">
+            <li>Millston: short walk from road</li>
+            <li>Shale: roadside, minimal walking</li>
+            <li>Wildcat: parking lot, short walk</li>
+        </ul>
+    </div>
+
+    <div class="warn-box">
+        <div class="warn-box__title">Cell Signal</div>
+        Spotty to none. Do NOT rely on texting.
+    </div>
+
+    <div class="card">
+        <div class="card__label">Text Code System — If Signal Works</div>
+        <table style="margin-bottom:0;">
+            <tr><th>Message</th><th>Meaning</th></tr>
+            <tr><td>M5 OK</td><td>Mile 5, all good</td></tr>
+            <tr><td>M16 FIX</td><td>Issue at Shale</td></tr>
+            <tr><td>M24 GOOD</td><td>Leaving Wildcat</td></tr>
+            <tr><td>FIN</td><td>Finished</td></tr>
+        </table>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">Before You Leave Home — Non-Negotiable</div>
+        <ul class="checklist">
+            <li><span class="check-box"></span> Download Google Maps offline area</li>
+            <li><span class="check-box"></span> Save each location as a starred pin</li>
+            <li><span class="check-box"></span> Screenshot directions between each point</li>
+            <li><span class="check-box"></span> Bring printed directions as backup</li>
+        </ul>
+        <div class="warn-box" style="margin-top:var(--space-sm);">
+            <div class="warn-box__title">Rule</div>
+            Cell service = unreliable. Plan like it doesn't exist.
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 7 — GEAR SETUP
+   ============================================================ -->
+<section id="gear">
+    <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-title">Gear Setup — Mobile Repair Station</span>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">Core System: 4 Bin Method</div>
+        <p>Label bins: Bin 1 = Millston, Bin 2 = Shale, Bin 3 = Wildcat, Bin 4 = Finish</p>
+        <p style="margin-top:var(--space-xs);">Each bin = pre-loaded for that stop.</p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">What Goes In Every Bin</div>
+        <table>
+            <tr><th>Category</th><th>Items</th></tr>
+            <tr><td><strong>1. FUEL (PRIMARY)</strong></td><td>Gels / chews she already uses, PB&J halves, pretzels / chips, banana, electrolyte mix (pre-portioned)</td></tr>
+            <tr><td><strong>2. HYDRATION</strong></td><td>1–2 full bottles ready to swap, extra soft flasks (pre-filled if possible)</td></tr>
+            <tr><td><strong>3. FEET + CHAFE KIT</strong></td><td>Spare socks (2–3 pairs), body glide / anti-chafe stick, small towel, blister kit (tape, bandages, needle)</td></tr>
+            <tr><td><strong>4. CLOTHING OPTIONS</strong></td><td>Dry shirt, light jacket or wind shell, gloves + hat, buff</td></tr>
+            <tr><td><strong>5. QUICK MED KIT</strong></td><td>Ibuprofen (if she uses it), salt tabs, ginger chews (for nausea)</td></tr>
+        </table>
+        <div class="mnemonic">
+            F-H-F-C-M — Fuel • Hydration • Feet • Clothing • Meds
+        </div>
+    </div>
+
+    <div class="card card--muted">
+        <div class="card__label">Extra — Keep In Car, Not Every Bin</div>
+        <ul class="bullet-list">
+            <li>Folding chair</li>
+            <li>Blanket or sleeping bag</li>
+            <li>Thermos (hot drink = HUGE at Wildcat)</li>
+            <li>Power bank + cables</li>
+            <li>Printed race guide + maps</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Per-Station Loadout — Simplified</div>
+        <table>
+            <tr><th>Station</th><th>Bring</th><th>Goal</th></tr>
+            <tr><td><strong>MILLSTON</strong> (Light Touch)</td><td>Water refill, small fuel, optional sock change</td><td>Quick check. Get her moving.</td></tr>
+            <tr><td><strong>SHALE</strong> (Main Work Zone)</td><td>Full fuel restock, full hydration swap, foot care kit</td><td>Reset system before and after Wildcat loop</td></tr>
+            <tr><td><strong>WILDCAT</strong> (Save the Race)</td><td>Warm layer, real food, caffeine option, backup everything</td><td>Keep her functional to finish</td></tr>
+            <tr><td><strong>FINISH</strong></td><td>Warm clothes, easy calories, blanket</td><td>Prevent collapse / freezing</td></tr>
+        </table>
+        <div class="mnemonic">
+            LIGHT → RESET → SAVE → RECOVER
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 8 — FINAL FAILURE POINTS
+   ============================================================ -->
+<section id="fail">
+    <div class="section-header">
+        <span class="section-num">08</span>
+        <span class="section-title">Final Failure Points — Read This Twice</span>
+    </div>
+
+    <div class="card" style="border:3px dashed var(--border);">
+        <ul class="bullet-list">
+            <li><strong>If you miss Shale → bad race</strong></li>
+            <li><strong>If you're late to Wildcat → possible DNF</strong></li>
+            <li><strong>If you can't find gear → you become the problem</strong></li>
+        </ul>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">Your Job In One Line</div>
+        <p style="font-family:var(--font-mono); font-size:1.1rem; font-weight:800; text-align:center; line-height:1.6;">
+            ARRIVE EARLY → SWAP FUEL → FIX ONE ISSUE → SEND HER FORWARD
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 9 — FINAL SYSTEM CHECK
+   ============================================================ -->
+<section id="check">
+    <div class="section-header">
+        <span class="section-num">09</span>
+        <span class="section-title">Final System Check</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">If You Follow This</div>
+        <ul class="bullet-list">
+            <li>No missed handoffs</li>
+            <li>No confusion</li>
+            <li>No wasted time</li>
+        </ul>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">Core Rule — Burn This In</div>
+        <p style="font-family:var(--font-mono); font-size:1.1rem; font-weight:800; text-align:center; line-height:1.6;">
+            PREPARE EARLY → SPEAK CLEARLY → FIX ONE THING → SEND HER FORWARD
+        </p>
+    </div>
+</section>
+
+<footer>
+    ZERO CONFUSION. ZERO MISSED HANDOFFS. FINISH THE RACE.
+</footer>
+
+</div>
+
+</body>
+</html>

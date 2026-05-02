@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melissa's 50K Priority Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FDFCF8;
+            color: #2C3E2D;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 4px 24px rgba(107, 142, 107, 0.08);
+        }
+
+        /* Monstera Illustration */
+        .monstera-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .monstera-svg {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #5A7C5A;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8B9D8B;
+            font-size: 0.95rem;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: #FAFBF7;
+            border-radius: 16px;
+            border-left: 4px solid #A8C5A8;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: #5A7C5A;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.4rem;
+        }
+
+        /* Checkbox Items */
+        .checklist {
+            list-style: none;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid #E8EDE8;
+            transition: all 0.2s ease;
+        }
+
+        .check-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-item:hover {
+            background: rgba(168, 197, 168, 0.08);
+            margin: 0 -12px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 8px;
+        }
+
+        /* Custom Checkbox */
+        .checkbox-wrapper {
+            position: relative;
+            min-width: 24px;
+            height: 24px;
+            margin-top: 2px;
+        }
+
+        input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            z-index: 2;
+        }
+
+        .custom-check {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #A8C5A8;
+            border-radius: 6px;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        input[type="checkbox"]:checked ~ .custom-check {
+            background: #5A7C5A;
+            border-color: #5A7C5A;
+        }
+
+        input[type="checkbox"]:checked ~ .custom-check::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .item-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #3D4F3D;
+        }
+
+        .item-text.checked {
+            text-decoration: line-through;
+            color: #A8B5A8;
+        }
+
+        .priority-tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high {
+            background: #E8D5D5;
+            color: #8B4545;
+        }
+
+        .priority-medium {
+            background: #E8E0D5;
+            color: #8B6F45;
+        }
+
+        .priority-low {
+            background: #D5E0D8;
+            color: #458B5F;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: linear-gradient(135deg, #F5F7F0 0%, #EDF1E8 100%);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #E0E8E0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8FAE8F 0%, #5A7C5A 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: #5A7C5A;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #E8EDE8;
+            color: #8B9D8B;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            .progress-container {
+                background: #F5F7F0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section {
+                background: #FAFBF7 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .custom-check {
+                border: 2px solid #A8C5A8 !important;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="container">
+    <!-- Monstera Line Art -->
+    <div class="monstera-container">
+        <svg class="monstera-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Stem -->
+            <path d="M100 180 Q100 140 100 120" stroke="#8FAE8F" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M100 120 Q100 100 85 85" stroke="#8FAE8F" stroke-width="2" stroke-linecap="round"/>
+            <path d="M100 120 Q100 95 115 80" stroke="#8FAE8F" stroke-width="2" stroke-linecap="round"/>
+            <path d="M100 140 Q75 130 70 110" stroke="#8FAE8F" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M100 140 Q125 130 130 110" stroke="#8FAE8F" stroke-width="1.8" stroke-linecap="round"/>
+            
+            <!-- Main Leaf -->
+            <path d="M85 85 C60 70, 50 50, 55 35 C60 20, 75 15, 85 25 C95 15, 110 20, 115 35 C120 50, 110 70, 85 85Z" 
+                  stroke="#5A7C5A" stroke-width="2.5" fill="#F5F7F0"/>
+            <path d="M85 85 Q85 55 85 35" stroke="#8FAE8F" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M85 85 Q70 65 60 45" stroke="#8FAE8F" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M85 85 Q100 65 110 45" stroke="#8FAE8F" stroke-width="1.2" stroke-linecap="round"/>
+            
+            <!-- Right Leaf -->
+            <path d="M115 80 C135 65, 145 50, 140 38 C138 28, 128 25, 120 32 C115 25, 105 28, 103 38 C100 50, 105 65, 115 80Z" 
+                  stroke="#5A7C5A" stroke-width="2.2" fill="#F5F7F0"/>
+            <path d="M115 80 Q115 58 115 40" stroke="#8FAE8F" stroke-width="1.3" stroke-linecap="round"/>
+            
+            <!-- Left Lower Leaf -->
+            <path d="M70 110 C50 100, 42 85, 48 75 C52 68, 62 68, 68 75 C75 68, 82 72, 80 82 C78 92, 72 102, 70 110Z" 
+                  stroke="#5A7C5A" stroke-width="2" fill="#F5F7F0"/>
+            <path d="M70 110 Q68 90 65 78" stroke="#8FAE8F" stroke-width="1.2" stroke-linecap="round"/>
+            
+            <!-- Right Lower Leaf -->
+            <path d="M130 110 C150 100, 158 85, 152 75 C148 68, 138 68, 132 75 C125 68, 118 72, 120 82 C122 92, 128 102, 130 110Z" 
+                  stroke="#5A7C5A" stroke-width="2" fill="#F5F7F0"/>
+            <path d="M130 110 Q132 90 135 78" stroke="#8FAE8F" stroke-width="1.2" stroke-linecap="round"/>
+            
+            <!-- Decorative dots -->
+            <circle cx="100" cy="175" r="3" fill="#C5D5C5"/>
+            <circle cx="92" cy="168" r="2" fill="#C5D5C5"/>
+            <circle cx="108" cy="168" r="2" fill="#C5D5C5"/>
+        </svg>
+    </div>
+
+    <h1>50K Priority Checklist</h1>
+    <p class="subtitle">Black River Trail Classic • October 17, 2026</p>
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-text">Completion Progress</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0 of 24 items completed</div>
+    </div>
+
+    <!-- Drop Bags -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">🎒</span>
+            Drop Bag Packing
+        </h2>
+        <ul class="checklist">
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    5 Corners drop bag: gels, chews, salty snack, lube packet
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Shale Road drop bag: 2 full flasks, gels, PB&J, anti-chafe, towel
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Shale Road backup: spare socks, buff, batteries/headlamp, rain shell
+                    <span class="priority-tag priority-medium">Medium</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Wildcat drop bag: real food, caffeine, electrolyte bottle, lube, socks
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Wildcat backup: warm layer, spare shoes, blister kit, inhaler/meds
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Finish bag: recovery drink, dry clothes, sandals (keep accessible!)
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Vehicle Inventory -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">🚗</span>
+            Vehicle Load
+        </h2>
+        <ul class="checklist">
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Printed race guide + paper map (cell service is poor)
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Offline Google Maps + forest map PDF downloaded
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Cooler: pre-mixed water & Tailwind bottles (labeled!)
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Fuel tote: Melissa's preferred gels, PB&J, banana, pretzels/chips
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Foot kit: 3x spare socks, spare trail shoes (size 8.5)
+                    <span class="priority-tag priority-medium">Medium</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    First aid: blister kit, tape, scissors, anti-chafe wipes
+                    <span class="priority-tag priority-medium">Medium</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Weather gear: rain shell, gloves, hat, dry shirt (Wisconsin moody toddler mode)
+                    <span class="priority-tag priority-medium">Medium</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Power: phone charger + power bank (charge night before)
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Race Day Execution -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">⏱️</span>
+            Race Day Execution
+        </h2>
+        <ul class="checklist">
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Start: Full vest/flasks, gels, bib secured, weather layer if needed
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Millston (Mile 5): Bottle ready, 1 gel open, towel visible
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Shale #1 (Mile 16.4): Full resupply laid out, socks/lube reachable
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Shale #2 (Mile 20): Quick reset only, warm layer staged if needed
+                    <span class="priority-tag priority-medium">Medium</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Wildcat (Mile 24): Warm/dry gear ready, real food/caffeine staged
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Finish: Blanket & dry clothes ready, record finish notes
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Critical Rules -->
+    <div class="section">
+        <h2 class="section-title">
+            <span class="section-icon">🛡️</span>
+            Critical Rules
+        </h2>
+        <ul class="checklist">
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Confirm 2026 aid-station chart at bib pickup before finalizing
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Pack by LOCATION, not by category. The car is not a junk drawer with wheels.
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Review medical alerts & emergency contacts pre-race
+                    <span class="priority-tag priority-high">High</span>
+                </span>
+            </li>
+            <li class="check-item">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span class="custom-check"></span>
+                </label>
+                <span class="item-text">
+                    Crew rule: Fix one thing, then send her forward. No 12-minute TED Talks at aid stations.
+                    <span class="priority-tag priority-medium">Medium</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Black River Trail Classic 50K • October 17, 2026</p>
+        <p style="margin-top: 4px; font-size: 0.8rem;">Minimalist Monstera Edition 🌿</p>
+    </div>
+</div>
+
+<script>
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+        const total = checkboxes.length;
+        const completed = checked.length;
+        const percentage = (completed / total) * 100;
+        
+        document.getElementById('progressFill').style.width = percentage + '%';
+        document.getElementById('progressText').textContent = completed + ' of ' + total + ' items completed';
+        
+        // Update text styling for checked items
+        checkboxes.forEach(box => {
+            const text = box.closest('.check-item').querySelector('.item-text');
+            if (box.checked) {
+                text.classList.add('checked');
+            } else {
+                text.classList.remove('checked');
+            }
+        });
+    }
+    
+    // Initialize
+    updateProgress();
+</script>
+
+</body>
+</html>

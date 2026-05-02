@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ULTRA RACE DAY DECISION SYSTEM — MELISSA 50K</title>
+<style>
+:root {
+    --ink: #000000;
+    --paper: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e0e0e0;
+    --gray-300: #c0c0c0;
+    --border: #000000;
+    --space-xs: 0.4rem;
+    --space-sm: 0.7rem;
+    --space-md: 1.1rem;
+    --space-lg: 1.8rem;
+    --space-xl: 2.5rem;
+    --font-mono: "SF Mono", Monaco, "Cascadia Code", "Fira Code", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body {
+    font-family: var(--font-sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+.nav-strip {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--paper);
+    border-bottom: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+.nav-strip::-webkit-scrollbar { display: none; }
+.nav-strip__brand {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-right: auto;
+    flex-shrink: 0;
+}
+.nav-strip__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 9px;
+    height: 28px;
+    border: 3px solid var(--border);
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.6rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.nav-strip__link:hover, .nav-strip__link:focus {
+    background: var(--ink);
+    color: var(--paper);
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
+}
+
+/* HERO */
+.hero {
+    border: 3px solid var(--border);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+}
+.hero__title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+}
+.hero__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-top: 3px solid var(--border);
+    padding-top: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+/* SECTION */
+section { margin-bottom: var(--space-xl); scroll-margin-top: 65px; }
+.section-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    border-bottom: 3px solid var(--border);
+    padding-bottom: var(--space-xs);
+}
+.section-num {
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    border: 3px solid var(--border);
+    padding: 2px 10px;
+    flex-shrink: 0;
+}
+.section-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* CARDS */
+.card {
+    border: 3px solid var(--border);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    background: var(--paper);
+}
+.card--gray {
+    background: var(--gray-200);
+}
+.card--muted {
+    background: var(--gray-100);
+}
+.card__label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xs);
+    opacity: 0.6;
+}
+
+/* MNEMONIC */
+.mnemonic {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-100);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* WARN BOX */
+.warn-box {
+    border: 3px dashed var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-100);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.warn-box__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xs);
+}
+
+/* TRUTH BOX */
+.truth-box {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    background: var(--gray-200);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.truth-box__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xs);
+}
+
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-bottom: var(--space-sm);
+}
+th, td {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    background: var(--gray-200);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+tr:nth-child(even) td {
+    background: var(--gray-100);
+}
+
+/* FLOW BLOCKS */
+.flow-block {
+    border: 3px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-sm);
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+.flow-arrow {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: var(--space-xs) 0;
+}
+
+/* DECISION TREE */
+.tree {
+    border: 3px solid var(--border);
+    padding: var(--space-md);
+    background: var(--gray-100);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 2;
+    text-align: center;
+}
+.tree__q {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    display: inline-block;
+    margin: var(--space-xs) 0;
+    background: var(--paper);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+.tree__branch {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin: var(--space-xs) 0;
+}
+.tree__end {
+    border: 2px solid var(--border);
+    padding: var(--space-xs) var(--space-sm);
+    display: inline-block;
+    background: var(--gray-200);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+/* CHECKLIST */
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+.checklist li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.checklist li:last-child {
+    border-bottom: none;
+}
+.check-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* BULLET LIST */
+.bullet-list {
+    list-style: none;
+    padding: 0;
+}
+.bullet-list li {
+    padding: var(--space-xs) 0 var(--space-xs) 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+}
+.bullet-list li:last-child {
+    border-bottom: none;
+}
+.bullet-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+}
+
+/* TWO COL */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+}
+@media (min-width: 640px) {
+    .two-col { grid-template-columns: 1fr 1fr; }
+}
+
+/* SCRIPT BOX */
+.script-box {
+    border-left: 6px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--gray-100);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-sans);
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    border: 3px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* PRINT */
+@media print {
+    html { font-size: 12px; }
+    .nav-strip { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .mnemonic, .warn-box, .truth-box, .tree, .script-box, table, footer {
+        border-color: #000 !important;
+        break-inside: avoid;
+    }
+    section { break-inside: avoid; margin-bottom: 1.2rem; }
+    .card--gray, .card--muted, .mnemonic, .truth-box, .tree { background: #f0f0f0 !important; }
+    .check-box { border-color: #000 !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-strip" aria-label="Section navigation">
+    <div class="nav-strip__brand">DECISION SYSTEM</div>
+    <a class="nav-strip__link" href="#loop">LOOP</a>
+    <a class="nav-strip__link" href="#trees">TREES</a>
+    <a class="nav-strip__link" href="#card">CARD</a>
+    <a class="nav-strip__link" href="#log">LOG</a>
+    <a class="nav-strip__link" href="#scripts">SCRIPTS</a>
+    <a class="nav-strip__link" href="#contingency">FIX</a>
+    <a class="nav-strip__link" href="#reality">REALITY</a>
+</nav>
+
+<div class="container">
+
+<header class="hero">
+    <h1 class="hero__title">ULTRA RACE DAY<br>DECISION SYSTEM</h1>
+    <p class="hero__subtitle">Melissa — Black River Trail Classic 50K — Sand, Humidity, Isolation, Rolling Hills</p>
+</header>
+
+<!-- ============================================================
+   CORE DECISION LOOP
+   ============================================================ -->
+<section id="loop">
+    <div class="section-header">
+        <span class="section-num">00</span>
+        <span class="section-title">Core Decision Loop — Print This At Top</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">STOP</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">BREATHE</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">ASSESS</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">DECIDE</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1.1rem; border-width:3px;">ACT</div>
+    </div>
+
+    <div class="two-col">
+        <div class="card">
+            <div class="card__label">What Each Step Means</div>
+            <ul class="bullet-list">
+                <li><strong>STOP</strong> = pause movement (10–60 sec)</li>
+                <li><strong>BREATHE</strong> = slow breathing (reduce panic)</li>
+                <li><strong>ASSESS</strong> = identify real issue (not emotion)</li>
+                <li><strong>DECIDE</strong> = choose from tree</li>
+                <li><strong>ACT</strong> = execute immediately</li>
+            </ul>
+        </div>
+        <div class="truth-box" style="margin:0;">
+            <div class="truth-box__title">When In Doubt</div>
+            <p style="font-family:var(--font-mono); font-size:1.2rem; font-weight:800; text-align:center; line-height:1.4;">
+                SLOW DOWN.<br>
+                FUEL.<br>
+                KEEP MOVING.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   DECISION TREES
+   ============================================================ -->
+<section id="trees">
+    <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Printable Decision Trees</span>
+    </div>
+
+    <!-- TREE 1 -->
+    <div class="card">
+        <div class="card__label">Tree 1 — "Melissa Wants To Stop"</div>
+        <div class="tree">
+            <div class="tree__q">Clear medical issue? (bleeding, confusion, injury)</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → STOP RACE → Medical</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Able to walk?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → STOP RACE</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Eaten in last 30–45 min?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → EAT + WALK 5–10 min → Reassess</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Overheating or chilled?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → Adjust clothing/fluids → Reassess</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Pain localized + worsening (injury)?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → STOP RACE</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">WALK FORWARD 5–10 MIN → RECHECK</div>
+        </div>
+        <div class="mnemonic">
+            DEFAULT RULE: IF NOT DANGEROUS → KEEP MOVING SLOWLY
+        </div>
+    </div>
+
+    <!-- TREE 2 -->
+    <div class="card">
+        <div class="card__label">Tree 2 — "Nausea / Stomach Issues"</div>
+        <div class="tree">
+            <div class="tree__q">Can she keep fluids down?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO (vomiting repeatedly) → >1 hr = STOP RACE / <1 hr = small sips + walk</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Still eating solids?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → Switch to liquid calories</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Effort too high?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → WALK 10–15 min</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">SMALL SIPS EVERY 2–3 MIN / SKIP 1 GEL / RESUME GRADUALLY</div>
+        </div>
+    </div>
+
+    <!-- TREE 3 -->
+    <div class="card">
+        <div class="card__label">Tree 3 — "She's Exhausted But On Pace"</div>
+        <div class="tree">
+            <div class="tree__q">Form breaking down badly?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → WALK INTERVALS</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Still fueling?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">NO → PRIORITIZE CALORIES</div>
+                <div class="tree__end">YES → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">SHIFT TO RUN/WALK / PROTECT ENERGY / FINISH > PACE</div>
+        </div>
+    </div>
+
+    <!-- TREE 4 -->
+    <div class="card">
+        <div class="card__label">Tree 4 — "Weather Turns Bad (Heat / Storm)"</div>
+        <div class="tree">
+            <div class="tree__q">Heat symptoms? (dizziness, chills, confusion)</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → COOL DOWN + SLOW → Reassess</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__q">Thunderstorm (lightning)?</div>
+            <div class="tree__branch">
+                <div class="tree__end" style="border-style:dashed;">YES → WAIT / SEEK COVER</div>
+                <div class="tree__end">NO → Continue</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">ADJUST PACE / INCREASE FLUIDS / CONTINUE ONLY IF STABLE</div>
+        </div>
+    </div>
+
+    <!-- TREE 5 -->
+    <div class="card">
+        <div class="card__label">Tree 5 — "Approaching Or Missed Cutoff"</div>
+        <div class="tree">
+            <div class="tree__q">Before cutoff?</div>
+            <div class="tree__branch">
+                <div class="tree__end">YES → Can she maintain forward movement? YES = KEEP GOING / NO = Reassess (Tree 1)</div>
+                <div class="tree__end" style="border-style:dashed;">NO (missed) → ACCEPT REMOVAL</div>
+            </div>
+            <div class="flow-arrow">▼</div>
+            <div class="tree__end" style="border-width:3px; font-size:0.9rem;">WALK TO FINISH OR PICKUP / EMOTIONAL SUPPORT > ANALYSIS</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   QUICK REFERENCE RACE CARD
+   ============================================================ -->
+<section id="card">
+    <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Quick Reference Race Card</span>
+    </div>
+
+    <div class="two-col">
+        <div class="card" style="border:3px dashed var(--border);">
+            <div class="card__label">Front — Stop Signs</div>
+            <p style="font-family:var(--font-mono); font-size:0.8rem; font-weight:800; text-transform:uppercase; margin-bottom:var(--space-sm);">Immediate Stop Race If:</p>
+            <ul class="checklist">
+                <li><span class="check-box"></span> Confusion > 2 minutes</li>
+                <li><span class="check-box"></span> Cannot walk</li>
+                <li><span class="check-box"></span> Vomiting repeatedly (>1 hr)</li>
+                <li><span class="check-box"></span> Severe injury / sharp worsening pain</li>
+                <li><span class="check-box"></span> Cannot keep fluids down</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card__label">Back — Keep Going Signs</div>
+            <p style="font-family:var(--font-mono); font-size:0.8rem; font-weight:800; text-transform:uppercase; margin-bottom:var(--space-sm);">Normal Ultra Suffering:</p>
+            <ul class="bullet-list">
+                <li>Fatigue</li>
+                <li>Slow pace</li>
+                <li>Soreness</li>
+                <li>Mental lows</li>
+                <li>Wanting to quit</li>
+            </ul>
+            <div class="mnemonic" style="margin-top:var(--space-sm);">
+                THIS IS THE EVENT. NOT FAILURE.
+            </div>
+        </div>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">5-Step Reset — Use Anytime</div>
+        <div class="flow-block">STOP</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">BREATHE</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">ASSESS</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">DECIDE</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block">ACT</div>
+    </div>
+</section>
+
+<!-- ============================================================
+   DECISION LOG
+   ============================================================ -->
+<section id="log">
+    <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Decision Log — Fillable Template</span>
+    </div>
+
+    <div class="card">
+        <table>
+            <tr><th>Time</th><th>Mile</th><th>Symptom</th><th>Decision</th><th>Action Taken</th><th>Outcome</th></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+        </table>
+        <div class="mnemonic">
+            EXAMPLE: 2:10 PM / Mile 24 / Nausea / Walk + fluids / Reduced pace / Improved
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   COMMUNICATION SCRIPTS
+   ============================================================ -->
+<section id="scripts">
+    <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Communication Scripts — Critical</span>
+    </div>
+
+    <div class="truth-box" style="margin-bottom:var(--space-md);">
+        <div class="truth-box__title">Rule</div>
+        <p>You are not arguing. You are executing pre-agreed rules.</p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When You Must Override Her</div>
+        <div class="script-box">"I love you. We agreed on this rule."</div>
+        <div class="script-box">"This is a safety call, not a performance call."</div>
+        <div class="script-box">"We're stopping to protect you."</div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When She Wants To Quit (But Safe)</div>
+        <div class="script-box">"You don't need to feel good. You just need to move."</div>
+        <div class="script-box">"Let's walk 5 minutes and reassess."</div>
+        <div class="script-box">"Next step only. Not the finish."</div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When She's Spiraling</div>
+        <div class="script-box">"You're okay. This is normal."</div>
+        <div class="script-box">"Just forward. Nothing else matters."</div>
+    </div>
+
+    <div class="card">
+        <div class="card__label">When She Misses Cutoff</div>
+        <div class="script-box">"You showed up. You did the work."</div>
+        <div class="script-box">"We'll learn from this. Not now."</div>
+    </div>
+</section>
+
+<!-- ============================================================
+   CONTINGENCY TABLE
+   ============================================================ -->
+<section id="contingency">
+    <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Contingency Table — Wrong Calls & Fixes</span>
+    </div>
+
+    <div class="card">
+        <table>
+            <tr><th>Wrong Call</th><th>Immediate Fix</th><th>Prevent Next Time</th></tr>
+            <tr><td><strong>Push too hard</strong></td><td>Slow to walk</td><td>Default to conservative pacing</td></tr>
+            <tr><td><strong>Skip fuel</strong></td><td>Small calories ASAP</td><td>Enforce hourly intake</td></tr>
+            <tr><td><strong>Miss cutoff</strong></td><td>Accept outcome calmly</td><td>Earlier conservative pacing</td></tr>
+            <tr><td><strong>Ignore heat</strong></td><td>Cool + hydrate</td><td>Early adjustment</td></tr>
+            <tr><td><strong>Stop too early</strong></td><td>Reassess with tree</td><td>Follow system, not emotion</td></tr>
+        </table>
+        <div class="mnemonic">
+            SLOW → FUEL → ACCEPT → COOL → REASSESS
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   REALITY CHECK
+   ============================================================ -->
+<section id="reality">
+    <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Reality Check — Mile 25–30</span>
+    </div>
+
+    <div class="card card--gray">
+        <div class="card__label">What Will Happen</div>
+        <ul class="bullet-list">
+            <li>She will want to quit</li>
+            <li>She will feel worse than expected</li>
+            <li>Her judgment will be unreliable</li>
+        </ul>
+    </div>
+
+    <div class="truth-box">
+        <div class="truth-box__title">This Is Not Failure</div>
+        <p style="font-family:var(--font-mono); font-size:1.2rem; font-weight:800; text-align:center; line-height:1.4;">
+            THAT IS NOT FAILURE.<br>
+            THAT IS THE EVENT.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card__label">Your Job — Burn This In</div>
+        <p style="font-weight:700; margin-bottom:var(--space-sm);">Not to guess. Not to motivate. Not to fix everything.</p>
+        <div class="flow-block" style="font-size:1rem; border-width:3px;">REMOVE EMOTION</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1rem; border-width:3px;">APPLY SYSTEM</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1rem; border-width:3px;">MAKE ONE DECISION</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-block" style="font-size:1rem; border-width:3px;">EXECUTE</div>
+    </div>
+
+    <div class="mnemonic">
+        EMOTION OUT → SYSTEM IN → DECIDE → EXECUTE
+    </div>
+</section>
+
+<footer>
+    REMOVE EMOTION. APPLY SYSTEM. MAKE ONE DECISION. EXECUTE.
+</footer>
+
+</div>
+
+</body>
+</html>
